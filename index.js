@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import { authRoutes } from './routes/authRoutes.js';
 import { connectDB } from './utils/connectDB.js';
+import { todoRoutes } from './routes/todoRoutes.js';
 
 dotenv.config();
 
@@ -13,6 +14,9 @@ connectDB();
 
 
 app.use('/auth',authRoutes)
+
+app.use('/todo', todoRoutes)
+
 
 
 const PORT = process.env.PORT;
