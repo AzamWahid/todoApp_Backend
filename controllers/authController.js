@@ -1,6 +1,10 @@
 import Users from '../models/users.js'
 import { successHandler, errorHandler } from "../utils/responseHandlers.js";
 import { hash, compare } from "bcryptjs";
+import pkg from 'jsonwebtoken';
+
+
+const {sign, verify} = pkg;
 
 
 export const registerController = async (req, res) => {
@@ -76,6 +80,11 @@ export const loginController = async (req, res) => {
         //     email: email
         // })
         if ( compare(password, isExists.password)) {
+            const generateToken = sign({
+                data: isExists,
+                expireIn: "3m",
+            },process.env.JWT_SECRET_KEY)
+            console.log(generateToken);
             return successHandler(res, 200, "User login Successfully")
         }
     } catch (error) {
